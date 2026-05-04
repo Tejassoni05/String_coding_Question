@@ -1,0 +1,33 @@
+import java.util.*;
+
+class Main {
+    public static void main(String[] args) {
+         String str = "11Z2233A1ABCDDD";
+         char []chars = str.toCharArray();
+         
+         Map<Character,Integer> map = new HashMap<>();
+         
+         for(char ch : chars){
+             if(!map.containsKey(ch)){
+                 map.put(ch,1);
+             }
+             else{
+                 int count = map.get(ch);
+                 map.put(ch, count+1);
+             }
+         }
+        System.out.println(map);
+    }
+}
+
+/*   
+ using java 8 
+Map<Character, Long> map = str.chars()
+                .mapToObj(c -> (char) c)
+                .collect(Collectors.groupingBy(
+                        Function.identity(),
+                        LinkedHashMap::new,
+                        Collectors.counting()
+                ));
+
+        System.out.println(map);*/

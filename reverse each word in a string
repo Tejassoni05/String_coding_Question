@@ -1,0 +1,44 @@
+//Split the string into words, reverse each word individually, and print them in the same order.
+// using java 8 also 
+class Main {
+    public static void main(String[] args) {
+
+        String str = "java code";
+        String[] words = str.split(" ");
+
+        // =========================================
+        // 🔹 Approach 1: Using String (Not Efficient)
+        // =========================================
+        for (String word : words) {
+            String reverse = "";
+
+            for (int i = word.length() - 1; i >= 0; i--) {
+                reverse = reverse + word.charAt(i);
+            }
+
+            System.out.print(reverse + " ");
+        }
+
+        System.out.println(); // new line
+
+        // =========================================
+        // 🔹 Approach 2: Using StringBuilder (Efficient)
+        // =========================================
+        for (String word : words) {
+            StringBuilder reverse = new StringBuilder();
+
+            for (int i = word.length() - 1; i >= 0; i--) {
+                reverse.append(word.charAt(i));
+            }
+
+            System.out.print(reverse + " ");
+        }
+// java 9 apporach 
+System.out.println(
+    java.util.Arrays.stream(str.split(" "))
+        .map(w -> new StringBuilder(w).reverse().toString())
+        .collect(java.util.stream.Collectors.joining(" "))
+);
+
+    }
+}

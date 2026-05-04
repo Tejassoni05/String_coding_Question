@@ -1,0 +1,91 @@
+/* Approach 1 (Stream) → clean + modern
+Approach 2 (indexOf) → last occurrence logic
+Approach 3 (Brute) → basic understanding
+Approach 4 (Set) → best for interview (simple + readable) */
+
+
+import java.util.Set;
+import java.util.LinkedHashSet;
+
+class Main {
+    public static void main(String[] args) {
+
+        String str = "programming";
+
+        // =========================================================
+        // 🔹 Approach 1: Java 8 (Stream + distinct)
+        // Removes duplicates and keeps first occurrence
+        // =========================================================
+        StringBuilder sb1 = new StringBuilder();
+
+        str.chars()                      // convert to IntStream (ASCII values)
+           .distinct()                  // remove duplicates
+           .forEach(c -> sb1.append((char) c)); // convert back to char and append
+
+        System.out.println("Approach 1 (Java 8): " + sb1);
+
+
+        // =========================================================
+        // 🔹 Approach 2: Using indexOf()
+        // Keeps LAST occurrence of each character
+        // =========================================================
+        StringBuilder sb2 = new StringBuilder();
+
+        for (int i = 0; i < str.length(); i++) {
+            char ch = str.charAt(i);
+
+            // check if character appears again ahead
+            int idx = str.indexOf(ch, i + 1);
+
+            if (idx == -1) { // last occurrence
+                sb2.append(ch);
+            }
+        }
+
+        System.out.println("Approach 2 (indexOf - last occurrence): " + sb2);
+
+
+        // =========================================================
+        // 🔹 Approach 3: Brute Force (Nested Loop)
+        // Keeps LAST occurrence
+        // Time Complexity: O(n^2)
+        // =========================================================
+        char[] arr = str.toCharArray();
+        StringBuilder sb3 = new StringBuilder();
+
+        for (int i = 0; i < arr.length; i++) {
+            boolean repeated = false;
+
+            for (int j = i + 1; j < arr.length; j++) {
+                if (arr[i] == arr[j]) {
+                    repeated = true;
+                    break;
+                }
+            }
+
+            if (!repeated) {
+                sb3.append(arr[i]);
+            }
+        }
+
+        System.out.println("Approach 3 (Brute Force): " + sb3);
+
+
+        // =========================================================
+        // 🔹 Approach 4: Using LinkedHashSet
+        // Removes duplicates and keeps insertion order (first occurrence)
+        // =========================================================
+        StringBuilder sb4 = new StringBuilder();
+        Set<Character> set = new LinkedHashSet<>();
+
+        for (int i = 0; i < str.length(); i++) {
+            set.add(str.charAt(i));
+        }
+
+        for (Character c : set) {
+            sb4.append(c);
+        }
+
+        System.out.println("Approach 4 (Set): " + sb4);
+    }
+}
